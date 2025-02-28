@@ -6,20 +6,20 @@
 
 void generateAndPrintIntArray(int size) {
     int* arr = new int[size];
-    for (int i = 0; i < size; ++i) {
-        arr[i] = rand() % 20 - 10; // Генерируем числа от -10 до 9
+    for (int* ptr = arr; ptr < arr + size; ++ptr) {
+        *ptr = rand() % 20 - 10; // Генерируем числа от -10 до 9
     }
 
     std::cout << "Исходный массив: ";
-    for (int i = 0; i < size; ++i) {
-        std::cout << arr[i] << " ";
+    for (int* ptr = arr; ptr < arr + size; ++ptr) {
+        std::cout << *ptr << " ";
     }
     std::cout << std::endl;
 
     std::sort(arr, arr + size);
     std::cout << "Отсортированный массив: ";
-    for (int i = 0; i < size; ++i) {
-        std::cout << arr[i] << " ";
+    for (int* ptr = arr; ptr < arr + size; ++ptr) {
+        std::cout << *ptr << " ";
     }
     std::cout << std::endl;
 
@@ -35,7 +35,9 @@ int main() {
     return 0;
 }
 
+
 №2
+
 #include <iostream>
 #include <cmath>
 
@@ -44,17 +46,17 @@ int main() {
     double arr[size];
 
     std::cout << "Введите 10 вещественных чисел: ";
-    for (double& num : arr) {
-        std::cin >> num;
+    for (double* ptr = arr; ptr < arr + size; ++ptr) {
+        std::cin >> *ptr;
     }
 
-    int maxIndex = 0;
-    for (int i = 1; i < size; ++i) {
-        if (std::abs(arr[i]) > std::abs(arr[maxIndex])) {
-            maxIndex = i;
+    double* maxPtr = arr;
+    for (double* ptr = arr + 1; ptr < arr + size; ++ptr) {
+        if (std::abs(*ptr) > std::abs(*maxPtr)) {
+            maxPtr = ptr;
         }
     }
 
-    std::cout << "Номер максимального по модулю элемента: " << maxIndex << std::endl;
+    std::cout << "Номер максимального по модулю элемента: " << (maxPtr - arr) << std::endl;
     return 0;
 }
