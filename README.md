@@ -1,87 +1,60 @@
 №1
-import random
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 
-def get(p):
-    while True:
-        try:
-            value = int(input(p))
-            if value > 0:
-                return value
-            else:
-                print("Введите положительное целое число.")
-        except ValueError:
-            print("Ошибка ввода. Попробуйте снова.")
+void generateAndPrintIntArray(int size) {
+    int* arr = new int[size];
+    for (int i = 0; i < size; ++i) {
+        arr[i] = rand() % 20 - 10; // Генерируем числа от -10 до 9
+    }
 
-M = get("Введите количество строк (M): ")
-N = get("Введите количество столбцов (N): ")
+    std::cout << "Исходный массив: ";
+    for (int i = 0; i < size; ++i) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
 
-matrix = [[random.randint(1, 100) for _ in range(N)] for _ in range(M)]
+    std::sort(arr, arr + size);
+    std::cout << "Отсортированный массив: ";
+    for (int i = 0; i < size; ++i) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
 
-print("Исходный список:")
-for row in matrix:
-    print(row)
+    int distinctCount = std::unique(arr, arr + size) - arr;
+    std::cout << "Количество различных элементов: " << distinctCount << std::endl;
 
-# Перестановка строк
-for i in range(M):
-    if i % 2 == 1:
-        matrix[i] = matrix[i][::-1]
+    delete[] arr;
+}
 
-print("Измененный список:")
-for row in matrix:
-    print(row)
-
+int main() {
+    srand(static_cast<unsigned int>(time(0)));
+    generateAndPrintIntArray(10);
+    return 0;
+}
 
 №2
-import random
+#include <iostream>
+#include <cmath>
 
-def get(p):
-    while True:
-        try:
-            value = int(input(p))
-            if value > 0:
-                return value
-            else:
-                print("Введите положительное целое число.")
-        except ValueError:
-            print("Ошибка ввода. Попробуйте снова.")
+int main() {
+    const int size = 10;
+    double arr[size];
 
-M = get("Введите количество строк (M): ")
-N = get("Введите количество столбцов (N): ")
+    std::cout << "Введите 10 вещественных чисел: ";
+    for (double& num : arr) {
+        std::cin >> num;
+    }
 
-matrix = [[random.randint(-50, 50) for _ in range(N)] for _ in range(M)]
+    int maxIndex = 0;
+    for (int i = 1; i < size; ++i) {
+        if (std::abs(arr[i]) > std::abs(arr[maxIndex])) {
+            maxIndex = i;
+        }
+    }
 
-print("Исходный список:")
-for row in matrix:
-    print(row)
-
-# Характеристика строки
-def characteristic(row):
-    return sum(x for x in row if x > 0 and x % 2 == 0)
-
-char_list = [(characteristic(row), row) for row in matrix]
-char_list.sort(reverse=True, key=lambda x: x[0])
-
-sorted = [row for _, row in char_list]
-
-print("Характеристики:")
-for char, _ in char_list:
-    print(char)
-
-print("Измененный список:")
-for row in sorted:
-    print(row)
-
-№3
-def get():
-    count = {}
-    for _ in range(int(input("Введите количество стран: "))):
-        entry = input("Введите страну и города (например, 'Россия: Москва, Санкт-Петербург'): ")
-        country, cities = entry.split(':')
-        count[country.strip()] = [city.strip() for city in cities.split(',')]
-    return count
-
-count = get()
-city = input("Введите город для поиска страны: ")
-
-f = next((country for country, cities in count.items() if city in cities), "Не найдено")
-print("Страна, где находится город:", f)
+    std::cout << "Номер максимального по модулю элемента: " << maxIndex << std::endl;
+    return 0;
+}
